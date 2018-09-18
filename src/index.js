@@ -1,26 +1,15 @@
 module.exports = function makeExchange(currency) {
-        let changedCurrency = {};
+    let changedCurrency = {};
     if (currency<1) return changedCurrency;
     if (currency>10000) 
     return {error: "You are rich, my friend! We don't have so much coins for exchange"};
-    if(Math.floor(currency/50)!=0){
-        changedCurrency.H = Math.floor(currency/50);
-        currency-=(50*changedCurrency.H);
-    }
-    if (Math.floor(currency/25)!=0){
-        changedCurrency.Q = Math.floor(currency/25);
-        currency-=(25*changedCurrency.Q);
-    }
-    if (Math.floor(currency/10)!=0){
-        changedCurrency.D = Math.floor(currency/10);
-        currency-=(10*changedCurrency.D);
-    }
-    if (Math.floor(currency/5)!=0){
-        changedCurrency.N = Math.floor(currency/5);
-        currency-=(5*changedCurrency.N);
-    }
-    if (currency!=0){
-    changedCurrency.P=currency;
+    letters='HQDNP';
+    coins=[50,25,10,5,1];
+    for (let i=0; i<5; i++) {
+        if (currency/coins[i]>=1){
+            changedCurrency[letters[i]] = Math.floor(currency/coins[i]);
+            currency-=(coins[i]*changedCurrency[letters[i]]);
+        }
     }
     return changedCurrency;
 }
